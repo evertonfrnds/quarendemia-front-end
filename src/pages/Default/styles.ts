@@ -53,20 +53,20 @@ export const Profile = styled.div`
   }
 `
 
-// CONTENT MAIN
-
 export const Content = styled.main`
   max-width: 1120px;
   margin: 34px auto;
   display: flex;
 `
+
+// NAVITEM
+
 export const NavItem = styled.div<PropsNavItem>`
   background: ${(props) => (props.selected ? '#2D2A33' : 'rgb(40, 38, 46)')};
   width: 220px;
   margin-bottom: 15px;
   padding: 18px 25px;
   border-radius: 5px;
-
   border-left: ${(p) => (p.selected ? '2px solid #ff9000' : '')};
 
   a {
@@ -82,44 +82,50 @@ export const NavItem = styled.div<PropsNavItem>`
     }
   }
 `
+
 export const MainContainer = styled.div`
   flex: 1;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 `
-export const MainTable = styled.div`
-  flex: 3;
-  margin-right: 15px;
-`
-export const Table = styled.table`
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0px 10px;
 
-  thead {
-    tr {
-      th {
-        padding: 10px 15px;
-        text-align: start;
-        font-weight: 300;
-        color: #999;
-        font-size: 14px;
-      }
+export const MainTitle = styled.div`
+  padding: 15px 0;
+  display: flex;
+  justify-content: space-between;
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .separator {
+      width: 1px;
+      height: 80%;
+      background-color: #999;
+      margin: 0 10px;
     }
-  }
-  tbody {
-    tr {
-      td {
-        text-align: start;
-        background-color: #2a2830;
-        padding: 15px 15px;
-        color: #bbb;
-      }
+    span {
+      font-size: 19px;
+      color: #999;
+      font-weight: 300;
     }
   }
 `
-
-export const MainCards = styled.div`
-  background-color: lightpink;
+// TABLE
+export const Main = styled.div`
   flex: 1;
+  display: flex;
+  flex-direction: column;
+`
+
+export const MainName = styled.div`
+  padding: 15px 10px;
+  display: flex;
+  font-size: 17px;
+  align-items: center;
+  h3 {
+    color: #999;
+    span {
+      color: white;
+    }
+  }
 `
