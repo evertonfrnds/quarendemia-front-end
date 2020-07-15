@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { shade } from 'polished'
 import { PropsNavItem } from '.'
 
 export const Container = styled.div``
@@ -195,13 +196,32 @@ export const Table = styled.table`
 // SearchInput
 
 export const SearchInput = styled.div`
-  background: #232129;
   display: flex;
-  padding: 10px 20px;
-  border-radius: 5px;
+  align-items: center;
+  button {
+    margin-right: 15px;
+    border: none;
+    background-color: #4285f4;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+      background-color: ${shade(0.2, '#4285f4')};
+    }
+    &::-moz-focus-inner {
+      border: none;
+    }
+  }
   input {
+    border-radius: 5px;
+    padding: 10px 20px;
+    background: #232129;
     flex: 1;
-    background: transparent;
     border: 0;
     color: #f4ede8;
   }

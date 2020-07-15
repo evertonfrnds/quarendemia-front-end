@@ -20,8 +20,10 @@ import {
 
 import NavSide from '../../components/NavSide'
 import Separator from '../../components/Separator'
+import Modal from '../../components/Modal'
 
 import { useAuth } from '../../hooks/auth'
+import { useModal } from '../../hooks/modal'
 
 export interface PropsNavItem {
   selected?: boolean
@@ -36,6 +38,7 @@ interface IResponse {
 
 const Plans: React.FC = () => {
   const { signOut, user } = useAuth()
+  const { isOpenRemove } = useModal()
   const [plans, setPlans] = useState<IResponse[]>([])
   useEffect(() => {
     async function loadPlans(): Promise<void> {
@@ -46,6 +49,9 @@ const Plans: React.FC = () => {
   }, [])
   return (
     <Container>
+      <Modal title="Excluir plano" type="del">
+        <p>Deseja realmente excluir este plano?</p>
+      </Modal>
       <Header>
         <HeaderContent>
           <Profile>
@@ -117,7 +123,11 @@ const Plans: React.FC = () => {
                           <button type="button">
                             <FiEdit2 />
                           </button>
-                          <button type="button" className="del">
+                          <button
+                            onClick={() => isOpenRemove(item.id)}
+                            type="button"
+                            className="del"
+                          >
                             <FiTrash />
                           </button>
                         </div>

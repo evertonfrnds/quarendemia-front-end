@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { FiPower, FiUsers, FiFileText } from 'react-icons/fi'
+import { FiPower, FiUsers, FiFileText, FiPlus } from 'react-icons/fi'
 import { AiOutlineDashboard } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
-// import api from '../../services/api'
+import api from '../../services/api'
 import {
   Container,
   Header,
@@ -19,28 +19,36 @@ import {
 } from './styles'
 import NavSide from '../../components/NavSide'
 import Separator from '../../components/Separator'
+import Modal from '../../components/Modal'
 import { useAuth } from '../../hooks/auth'
+import { useModal } from '../../hooks/modal'
 
 export interface PropsNavItem {
   selected?: boolean
 }
 
-interface IParams {
-  id: string
-}
-
-interface IPlanData {
+interface IResponse {
   id: string
   name: string
-  description: string
-  value: number
+  email: string
 }
 
 const Clients: React.FC = () => {
   const { signOut, user } = useAuth()
+  const { isOpenAdd } = useModal()
+  const [clients, setClients] = React.useState<IResponse[]>([])
+
+  React.useEffect(() => {
+    async function loadClients(): Promise<void> {
+      const response = await api.get('/clients')
+      await setClients(response.data)
+    }
+    loadClients()
+  }, [])
 
   return (
     <Container>
+      <Modal title="Novo cliente" type="add" />
       <Header>
         <HeaderContent>
           <Profile>
@@ -52,7 +60,7 @@ const Clients: React.FC = () => {
             </div>
           </Profile>
 
-          <button type="button" onClick={() => signOut}>
+          <button type="button" onClick={signOut}>
             <FiPower />
           </button>
         </HeaderContent>
@@ -87,6 +95,9 @@ const Clients: React.FC = () => {
               <span>Lista de clientes</span>
             </div>
             <SearchInput>
+              <button type="button" onClick={isOpenAdd}>
+                <FiPlus size={20} />
+              </button>
               <input type="text" placeholder="Pesquisar" />
             </SearchInput>
           </MainTitle>
@@ -98,6 +109,16 @@ const Clients: React.FC = () => {
                   <th>Email</th>
                 </tr>
               </thead>
+              <tbody>
+                {clients.map((item) => {
+                  return (
+                    <tr key={item.id}>
+                      <td>{item.name}</td>
+                      <td>{item.email}</td>
+                    </tr>
+                  )
+                })}
+              </tbody>
             </Table>
           </Main>
         </MainContainer>
