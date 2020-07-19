@@ -8,7 +8,6 @@ export const Container = styled(Modal)`
   transform: translate(-50%, -50%);
   border-radius: 10px;
   max-width: 55rem;
-  /* max-height: 42.1rem; */
   padding: 10px;
   width: 350px;
   background-color: #28262e;

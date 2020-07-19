@@ -46,9 +46,9 @@ const Clients: React.FC = () => {
     loadClients()
   }, [])
 
+  // <Modal title="Novo cliente" type="add" />
   return (
     <Container>
-      <Modal title="Novo cliente" type="add" />
       <Header>
         <HeaderContent>
           <Profile>

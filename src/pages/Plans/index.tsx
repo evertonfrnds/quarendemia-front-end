@@ -38,19 +38,27 @@ interface IResponse {
 
 const Plans: React.FC = () => {
   const { signOut, user } = useAuth()
-  const { isOpenRemove } = useModal()
+  const { isOpenRemove, isOpenEdit } = useModal()
   const [plans, setPlans] = useState<IResponse[]>([])
-  useEffect(() => {
-    async function loadPlans(): Promise<void> {
-      const response = await api.get('/plans')
-      await setPlans(response.data)
-    }
+
+  const loadPlans = React.useCallback(async () => {
+    const response = await api.get('/plans')
+    await setPlans(response.data)
+  }, [plans])
+
+  React.useEffect(() => {
     loadPlans()
   }, [])
+
   return (
     <Container>
-      <Modal title="Excluir plano" type="del">
+      <Modal title="Excluir plano" type="del" loadPlans={loadPlans}>
         <p>Deseja realmente excluir este plano?</p>
+      </Modal>
+      <Modal title="Editar plano" type="edit" loadPlans={loadPlans}>
+        <form>
+          <input type="text" placeholder="nome" />
+        </form>
       </Modal>
       <Header>
         <HeaderContent>
@@ -120,7 +128,11 @@ const Plans: React.FC = () => {
                       <td>R$ {item.value}</td>
                       <td>
                         <div className="group-button">
-                          <button type="button">
+                          <button
+                            onClick={isOpenEdit}
+                            type="button"
+                            className="edit"
+                          >
                             <FiEdit2 />
                           </button>
                           <button
