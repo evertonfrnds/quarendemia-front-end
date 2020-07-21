@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 
 import { FiPower, FiUsers, FiFileText } from 'react-icons/fi'
 import { AiOutlineDashboard } from 'react-icons/ai'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
-import Table, { TableState } from '../../components/Table'
+import Table, { TableState } from '../../../components/Table'
 
 import {
   Container,
@@ -15,26 +15,27 @@ import {
   NavItem,
 } from './styles'
 
-import NavSide from '../../components/NavSide'
-import Separator from '../../components/Separator'
+import NavSide from '../../../components/NavSide'
+import Separator from '../../../components/Separator'
 
-import { useAuth } from '../../hooks/auth'
-import api from '../../services/api'
+import { useAuth } from '../../../hooks/auth'
+import api from '../../../services/api'
 
 export interface PropsNavItem {
   selected?: boolean
 }
 
 interface Plan {
+  id: string
   name: string
   description: string
   value: number
 }
 
-const Dashboard: React.FC = () => {
+const ListPlans: React.FC = () => {
   const { signOut, user } = useAuth()
 
-  const [tableColumn, setTableColumn] = useState<TableState>({
+  const [tableColumn] = useState<TableState>({
     columns: [
       { title: 'Nome', field: 'name' },
       { title: 'Descrição', field: 'description' },
@@ -43,11 +44,24 @@ const Dashboard: React.FC = () => {
   })
   const [plans, setPlans] = useState<Plan[]>([])
 
+  const history = useHistory()
+
   useEffect(() => {
     api.get(`/plans`).then((response) => {
       setPlans(response.data)
     })
   }, [])
+
+  const handleNavigateToCreate = useCallback(() => {
+    history.push('plans-create')
+  }, [history])
+
+  const handleNavigateToEdit = useCallback(
+    (planId: string) => {
+      history.push('plans-edit', { id: planId })
+    },
+    [history],
+  )
 
   return (
     <Container>
@@ -83,7 +97,7 @@ const Dashboard: React.FC = () => {
             </Link>
           </NavItem>
           <NavItem>
-            <Link to="/plans-list">
+            <Link to="/plans">
               <p>Planos</p>
               <FiFileText />
             </Link>
@@ -99,12 +113,14 @@ const Dashboard: React.FC = () => {
               icon: 'add',
               tooltip: 'Add User',
               isFreeAction: true,
-              onClick: () => alert('You want to add a new row'),
+              onClick: handleNavigateToCreate,
             },
             {
               icon: 'edit',
               tooltip: 'Save User',
-              onClick: () => alert(`You saved`),
+              onClick: (_, rowData: Plan) => {
+                handleNavigateToEdit(rowData.id)
+              },
             },
             {
               icon: 'delete',
@@ -118,4 +134,4 @@ const Dashboard: React.FC = () => {
   )
 }
 
-export default Dashboard
+export default ListPlans

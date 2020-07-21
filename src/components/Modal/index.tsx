@@ -40,7 +40,7 @@ const Modal: React.FC<IProps> = ({ children, title, type, loadPlans }) => {
   return (
     <>
       <Container
-        isOpen={}
+        isOpen
         onRequestClose={() => (modalAddIsOpen ? isOpenAdd() : isOpenRemove())}
         style={{
           overlay: {

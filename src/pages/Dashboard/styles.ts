@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Table as TableMaterial } from '@material-ui/core'
 import { PropsNavItem } from '.'
 
 export const Container = styled.div``
@@ -53,13 +54,12 @@ export const Profile = styled.div`
   }
 `
 
-// CONTENT MAIN
-
 export const Content = styled.main`
   max-width: 1120px;
   margin: 34px auto;
   display: flex;
 `
+
 export const NavItem = styled.div<PropsNavItem>`
   background: ${(props) => (props.selected ? '#2D2A33' : 'rgb(40, 38, 46)')};
   width: 220px;
@@ -82,44 +82,57 @@ export const NavItem = styled.div<PropsNavItem>`
     }
   }
 `
-export const MainContainer = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-`
-export const MainTable = styled.div`
-  flex: 3;
-  margin-right: 15px;
-`
-export const Table = styled.table`
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0px 10px;
 
-  thead {
-    tr {
-      th {
-        padding: 10px 15px;
-        text-align: start;
-        font-weight: 300;
-        color: #999;
-        font-size: 14px;
-      }
-    }
-  }
-  tbody {
-    tr {
-      td {
-        text-align: start;
-        background-color: #2a2830;
-        padding: 15px 15px;
-        color: #bbb;
-      }
-    }
-  }
+export const Table = styled(TableMaterial)`
+  background-color: red;
 `
 
-export const MainCards = styled.div`
-  background-color: lightpink;
-  flex: 1;
-`
+// CONTENT MAIN
+
+// export const Content = styled.main`
+//   max-width: 1120px;
+//   margin: 34px auto;
+//   display: flex;
+// `
+
+// export const MainContainer = styled.div`
+//   flex: 1;
+//   display: flex;
+//   flex-direction: row;
+// `
+// export const MainTable = styled.div`
+//   flex: 3;
+//   margin-right: 15px;
+// `
+// export const Table = styled.table`
+//   width: 100%;
+//   border-collapse: separate;
+//   border-spacing: 0px 10px;
+
+//   thead {
+//     tr {
+//       th {
+//         padding: 10px 15px;
+//         text-align: start;
+//         font-weight: 300;
+//         color: #999;
+//         font-size: 14px;
+//       }
+//     }
+//   }
+//   tbody {
+//     tr {
+//       td {
+//         text-align: start;
+//         background-color: #2a2830;
+//         padding: 15px 15px;
+//         color: #bbb;
+//       }
+//     }
+//   }
+// `
+
+// export const MainCards = styled.div`
+//   background-color: lightpink;
+//   flex: 1;
+// `
