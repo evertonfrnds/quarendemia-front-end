@@ -25,11 +25,16 @@ const Table: React.FC<TableProps> = ({ columns, data, actions, ...rest }) => {
 
   return (
     <MaterialTable
+      style={{ minWidth: 600, background: '#28262e' }}
       actions={actions}
       data={data}
       columns={tableColumn.columns}
       options={{
         actionsColumnIndex: -1,
+        headerStyle: {
+          backgroundColor: '#28262e',
+          color: '#fff',
+        },
       }}
       {...rest}
     />

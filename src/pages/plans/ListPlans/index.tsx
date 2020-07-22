@@ -1,25 +1,19 @@
 import React, { useState, useEffect, useCallback } from 'react'
 
-import { FiPower, FiUsers, FiFileText } from 'react-icons/fi'
-import { AiOutlineDashboard } from 'react-icons/ai'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+
+import { useConfirm } from 'material-ui-confirm'
 
 import Table, { TableState } from '../../../components/Table'
 
-import {
-  Container,
-  Header,
-  HeaderContent,
-  Profile,
-  Content,
-  NavItem,
-} from './styles'
+import { Container, Content } from './styles'
+import Header from '../../../components/Header'
 
 import NavSide from '../../../components/NavSide'
 import Separator from '../../../components/Separator'
 
-import { useAuth } from '../../../hooks/auth'
 import api from '../../../services/api'
+import { useToast } from '../../../hooks/toast'
 
 export interface PropsNavItem {
   selected?: boolean
@@ -33,8 +27,6 @@ interface Plan {
 }
 
 const ListPlans: React.FC = () => {
-  const { signOut, user } = useAuth()
-
   const [tableColumn] = useState<TableState>({
     columns: [
       { title: 'Nome', field: 'name' },
@@ -45,12 +37,19 @@ const ListPlans: React.FC = () => {
   const [plans, setPlans] = useState<Plan[]>([])
 
   const history = useHistory()
+  const confirm = useConfirm()
 
-  useEffect(() => {
+  const { addToast } = useToast()
+
+  const getPlans = useCallback(() => {
     api.get(`/plans`).then((response) => {
       setPlans(response.data)
     })
   }, [])
+
+  useEffect(() => {
+    getPlans()
+  }, [getPlans])
 
   const handleNavigateToCreate = useCallback(() => {
     history.push('plans-create')
@@ -63,46 +62,35 @@ const ListPlans: React.FC = () => {
     [history],
   )
 
+  const handleDeleteItem = useCallback(
+    async (planId) => {
+      await confirm({
+        description: 'Deseja mesmo excluir o plano selecionado?',
+        confirmationText: 'Sim',
+        confirmationButtonProps: { color: 'primary', variant: 'contained' },
+        cancellationText: 'Não',
+      })
+      try {
+        await api.delete(`plans/${planId}`)
+
+        getPlans()
+      } catch {
+        addToast({
+          type: 'error',
+          title: 'Erro durante a exclusão do plano',
+          description: 'Ocorreu um erro ao excluir o plano, tente novamente',
+        })
+      }
+    },
+    [confirm, addToast, getPlans],
+  )
+
   return (
     <Container>
-      <Header>
-        <HeaderContent>
-          <Profile>
-            <div>
-              <span>Bem-vindo,</span>
-              <Link to="/profile">
-                <strong>{user.name}</strong>
-              </Link>
-            </div>
-          </Profile>
-
-          <button type="button" onClick={signOut}>
-            <FiPower />
-          </button>
-        </HeaderContent>
-      </Header>
+      <Header />
 
       <Content>
-        <NavSide>
-          <NavItem selected>
-            <Link to="/dashboard">
-              <p>Visão geral</p>
-              <AiOutlineDashboard />
-            </Link>
-          </NavItem>
-          <NavItem>
-            <Link to="/clients">
-              <p>Clientes</p>
-              <FiUsers />
-            </Link>
-          </NavItem>
-          <NavItem>
-            <Link to="/plans">
-              <p>Planos</p>
-              <FiFileText />
-            </Link>
-          </NavItem>
-        </NavSide>
+        <NavSide />
         <Separator />
         <Table
           title="Planos"
@@ -117,15 +105,17 @@ const ListPlans: React.FC = () => {
             },
             {
               icon: 'edit',
-              tooltip: 'Save User',
+              tooltip: 'Editar plano',
               onClick: (_, rowData: Plan) => {
                 handleNavigateToEdit(rowData.id)
               },
             },
             {
               icon: 'delete',
-              tooltip: 'Save User',
-              onClick: () => alert(`You saved`),
+              tooltip: 'Deletar plano',
+              onClick: (_, rowData: Plan) => {
+                handleDeleteItem(rowData.id)
+              },
             },
           ]}
         />

@@ -1,6 +1,4 @@
 import styled from 'styled-components'
-import { Table as TableMaterial } from '@material-ui/core'
-import { PropsNavItem } from '.'
 
 export const Container = styled.div``
 
@@ -58,33 +56,6 @@ export const Content = styled.main`
   max-width: 1120px;
   margin: 34px auto;
   display: flex;
-`
-
-export const NavItem = styled.div<PropsNavItem>`
-  background: ${(props) => (props.selected ? '#2D2A33' : 'rgb(40, 38, 46)')};
-  width: 220px;
-  margin-bottom: 15px;
-  padding: 18px 25px;
-  border-radius: 5px;
-
-  border-left: ${(p) => (p.selected ? '2px solid #ff9000' : '')};
-
-  a {
-    text-decoration: none;
-    color: ${(p) => (p.selected ? '#ff9000' : '#fff')};
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: row;
-
-    &:hover {
-      color: #ff9000;
-    }
-  }
-`
-
-export const Table = styled(TableMaterial)`
-  background-color: red;
 `
 
 // CONTENT MAIN

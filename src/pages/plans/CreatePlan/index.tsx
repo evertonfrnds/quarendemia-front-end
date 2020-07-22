@@ -1,9 +1,8 @@
 import React, { useCallback, useRef } from 'react'
-import { FiMail, FiUser, FiArrowLeft } from 'react-icons/fi'
+import { FiMail, FiUser } from 'react-icons/fi'
 import { FormHandles } from '@unform/core'
-import { Form } from '@unform/web'
 import * as Yup from 'yup'
-import { useHistory, Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import api from '../../../services/api'
 import { useToast } from '../../../hooks/toast'
 
@@ -12,7 +11,10 @@ import getValidationErrors from '../../../utils/getValidationErrors'
 import Button from '../../../components/Button'
 import Input from '../../../components/Input'
 
-import { Container, Content } from './styles'
+import { Container, Content, Form } from './styles'
+import Header from '../../../components/Header'
+import NavSide from '../../../components/NavSide'
+import Separator from '../../../components/Separator'
 
 interface CreatePlanFormData {
   name: string
@@ -70,15 +72,11 @@ const CreatePlan: React.FC = () => {
 
   return (
     <Container>
-      <header>
-        <div>
-          <Link to="/dashboard">
-            <FiArrowLeft />
-          </Link>
-        </div>
-      </header>
+      <Header />
 
       <Content>
+        <NavSide />
+        <Separator />
         <Form ref={formRef} onSubmit={handleSubmit}>
           <h1>Cadastrar plano</h1>
 

@@ -1,29 +1,14 @@
 import React, { useState, useEffect } from 'react'
 
-import { FiPower, FiUsers, FiFileText } from 'react-icons/fi'
-import { AiOutlineDashboard } from 'react-icons/ai'
-import { Link } from 'react-router-dom'
-
 import Table, { TableState } from '../../components/Table'
 
-import {
-  Container,
-  Header,
-  HeaderContent,
-  Profile,
-  Content,
-  NavItem,
-} from './styles'
+import { Container, Content } from './styles'
+import Header from '../../components/Header'
 
 import NavSide from '../../components/NavSide'
 import Separator from '../../components/Separator'
 
-import { useAuth } from '../../hooks/auth'
 import api from '../../services/api'
-
-export interface PropsNavItem {
-  selected?: boolean
-}
 
 interface Plan {
   name: string
@@ -32,9 +17,7 @@ interface Plan {
 }
 
 const Dashboard: React.FC = () => {
-  const { signOut, user } = useAuth()
-
-  const [tableColumn, setTableColumn] = useState<TableState>({
+  const [tableColumn] = useState<TableState>({
     columns: [
       { title: 'Nome', field: 'name' },
       { title: 'Descrição', field: 'description' },
@@ -51,44 +34,10 @@ const Dashboard: React.FC = () => {
 
   return (
     <Container>
-      <Header>
-        <HeaderContent>
-          <Profile>
-            <div>
-              <span>Bem-vindo,</span>
-              <Link to="/profile">
-                <strong>{user.name}</strong>
-              </Link>
-            </div>
-          </Profile>
-
-          <button type="button" onClick={signOut}>
-            <FiPower />
-          </button>
-        </HeaderContent>
-      </Header>
+      <Header />
 
       <Content>
-        <NavSide>
-          <NavItem selected>
-            <Link to="/dashboard">
-              <p>Visão geral</p>
-              <AiOutlineDashboard />
-            </Link>
-          </NavItem>
-          <NavItem>
-            <Link to="/clients">
-              <p>Clientes</p>
-              <FiUsers />
-            </Link>
-          </NavItem>
-          <NavItem>
-            <Link to="/plans-list">
-              <p>Planos</p>
-              <FiFileText />
-            </Link>
-          </NavItem>
-        </NavSide>
+        <NavSide />
         <Separator />
         <Table
           title="Planos"
