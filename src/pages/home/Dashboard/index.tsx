@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 
-import Table, { TableState } from '../../components/Table'
+import Table, { TableState } from '../../../components/Table'
 
 import { Container, Content } from './styles'
-import Header from '../../components/Header'
+import Header from '../../../components/Header'
 
-import NavSide from '../../components/NavSide'
-import Separator from '../../components/Separator'
+import NavSide from '../../../components/NavSide'
+import Separator from '../../../components/Separator'
 
-import api from '../../services/api'
+import api from '../../../services/api'
 
 interface Plan {
   name: string

@@ -2,7 +2,7 @@ import React from 'react'
 
 import Route from './Route'
 
-import Dashboard from '../pages/Dashboard'
+import Dashboard from '../pages/home/Dashboard'
 
 const MeasureRoutes: React.FC = () => (
   <>

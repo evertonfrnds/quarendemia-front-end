@@ -5,13 +5,13 @@ import { FormHandles } from '@unform/core'
 import * as Yup from 'yup'
 import { Link } from 'react-router-dom'
 
-import { useAuth } from '../../hooks/auth'
-import { useToast } from '../../hooks/toast'
+import { useAuth } from '../../../hooks/auth'
+import { useToast } from '../../../hooks/toast'
 
-import getValidationErrors from '../../utils/getValidationErrors'
+import getValidationErrors from '../../../utils/getValidationErrors'
 
-import Button from '../../components/Button'
-import Input from '../../components/Input'
+import Button from '../../../components/Button'
+import Input from '../../../components/Input'
 
 import { Container, Content, AnimationContainer, Background } from './styles'
 

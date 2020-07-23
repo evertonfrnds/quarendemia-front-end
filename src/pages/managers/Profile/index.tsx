@@ -4,16 +4,16 @@ import { FormHandles } from '@unform/core'
 import { Form } from '@unform/web'
 import * as Yup from 'yup'
 import { useHistory, Link } from 'react-router-dom'
-import api from '../../services/api'
-import { useToast } from '../../hooks/toast'
+import api from '../../../services/api'
+import { useToast } from '../../../hooks/toast'
 
-import getValidationErrors from '../../utils/getValidationErrors'
+import getValidationErrors from '../../../utils/getValidationErrors'
 
-import Button from '../../components/Button'
-import Input from '../../components/Input'
+import Button from '../../../components/Button'
+import Input from '../../../components/Input'
 
 import { Container, Content } from './styles'
-import { useAuth } from '../../hooks/auth'
+import { useAuth } from '../../../hooks/auth'
 
 interface ProfileFormData {
   name: string

@@ -5,15 +5,15 @@ import { FormHandles } from '@unform/core'
 import * as Yup from 'yup'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 
-import { useToast } from '../../hooks/toast'
+import { useToast } from '../../../hooks/toast'
 
-import getValidationErrors from '../../utils/getValidationErrors'
+import getValidationErrors from '../../../utils/getValidationErrors'
 
-import Button from '../../components/Button'
-import Input from '../../components/Input'
+import Button from '../../../components/Button'
+import Input from '../../../components/Input'
 
 import { Container, Content, AnimationContainer, Background } from './styles'
-import api from '../../services/api'
+import api from '../../../services/api'
 
 interface ResetPasswordFormData {
   password: string
