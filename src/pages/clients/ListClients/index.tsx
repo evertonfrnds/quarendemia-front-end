@@ -22,63 +22,70 @@ interface Plan {
   value: number
 }
 
-const ListPlans: React.FC = () => {
+const ListClients: React.FC = () => {
   const [tableColumn] = useState<TableState>({
     columns: [
       { title: 'Nome', field: 'name' },
-      { title: 'Descrição', field: 'description' },
-      { title: 'Valor', field: 'value', type: 'numeric' },
+      { title: 'Email', field: 'email' },
+      { title: 'Plano', field: 'plan.name' },
     ],
   })
-  const [plans, setPlans] = useState<Plan[]>([])
+  const [clients, setClients] = useState<Plan[]>([])
 
   const history = useHistory()
   const confirm = useConfirm()
 
   const { addToast } = useToast()
 
-  const getPlans = useCallback(() => {
-    api.get(`/plans`).then((response) => {
-      setPlans(response.data)
+  const getClients = useCallback(() => {
+    api.get(`/clients`).then((response) => {
+      setClients(response.data)
     })
   }, [])
 
   useEffect(() => {
-    getPlans()
-  }, [getPlans])
+    getClients()
+  }, [getClients])
 
   const handleNavigateToCreate = useCallback(() => {
-    history.push('plans-create')
+    history.push('clients-create')
   }, [history])
 
   const handleNavigateToEdit = useCallback(
-    (planId: string) => {
-      history.push('plans-edit', { id: planId })
+    (clientId: string) => {
+      history.push('clients-edit', { id: clientId })
+    },
+    [history],
+  )
+
+  const handleNavigateToMeasures = useCallback(
+    (clientId: string) => {
+      history.push('measures-list', { client_id: clientId })
     },
     [history],
   )
 
   const handleDeleteItem = useCallback(
-    async (planId) => {
+    async (clientId) => {
       await confirm({
-        description: 'Deseja mesmo excluir o plano selecionado?',
+        description: 'Deseja mesmo bloquear o cliente selecionado?',
         confirmationText: 'Sim',
         confirmationButtonProps: { color: 'primary', variant: 'contained' },
         cancellationText: 'Não',
       })
       try {
-        await api.delete(`plans/${planId}`)
+        await api.delete(`clients/${clientId}`)
 
-        getPlans()
+        getClients()
       } catch {
         addToast({
           type: 'error',
-          title: 'Erro durante a exclusão do plano',
-          description: 'Ocorreu um erro ao excluir o plano, tente novamente',
+          title: 'Erro durante o bloqueio do cliente',
+          description: 'Ocorreu um erro ao bloquear o cliente, tente novamente',
         })
       }
     },
-    [confirm, addToast, getPlans],
+    [confirm, addToast, getClients],
   )
 
   return (
@@ -89,26 +96,33 @@ const ListPlans: React.FC = () => {
         <NavSide />
         <Separator />
         <Table
-          title="Planos"
+          title="Clientes"
           columns={tableColumn.columns}
-          data={plans}
+          data={clients}
           actions={[
             {
               icon: 'add',
-              tooltip: 'Adicionar plano',
+              tooltip: 'Adicionar cliente',
               isFreeAction: true,
               onClick: handleNavigateToCreate,
             },
             {
               icon: 'edit',
-              tooltip: 'Editar plano',
+              tooltip: 'Ver medições',
+              onClick: (_, rowData: Plan) => {
+                handleNavigateToMeasures(rowData.id)
+              },
+            },
+            {
+              icon: 'edit',
+              tooltip: 'Editar cliente',
               onClick: (_, rowData: Plan) => {
                 handleNavigateToEdit(rowData.id)
               },
             },
             {
               icon: 'delete',
-              tooltip: 'Deletar plano',
+              tooltip: 'Deletar cliente',
               onClick: (_, rowData: Plan) => {
                 handleDeleteItem(rowData.id)
               },
@@ -120,4 +134,4 @@ const ListPlans: React.FC = () => {
   )
 }
 
-export default ListPlans
+export default ListClients

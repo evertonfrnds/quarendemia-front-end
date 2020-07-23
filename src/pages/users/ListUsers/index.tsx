@@ -15,70 +15,77 @@ import Separator from '../../../components/Separator'
 import api from '../../../services/api'
 import { useToast } from '../../../hooks/toast'
 
-interface Plan {
+interface User {
   id: string
   name: string
-  description: string
-  value: number
+  email: string
+  type: number
 }
 
-const ListPlans: React.FC = () => {
+const ListUsers: React.FC = () => {
   const [tableColumn] = useState<TableState>({
     columns: [
       { title: 'Nome', field: 'name' },
-      { title: 'Descrição', field: 'description' },
-      { title: 'Valor', field: 'value', type: 'numeric' },
+      { title: 'E-mail', field: 'email' },
+      { title: 'Tipo', field: 'type' },
     ],
   })
-  const [plans, setPlans] = useState<Plan[]>([])
+  const [users, setUsers] = useState<User[]>([])
 
   const history = useHistory()
   const confirm = useConfirm()
 
   const { addToast } = useToast()
 
-  const getPlans = useCallback(() => {
-    api.get(`/plans`).then((response) => {
-      setPlans(response.data)
+  const getUsers = useCallback(() => {
+    api.get(`/users`).then((response) => {
+      setUsers(response.data)
     })
   }, [])
 
   useEffect(() => {
-    getPlans()
-  }, [getPlans])
+    getUsers()
+  }, [getUsers])
 
   const handleNavigateToCreate = useCallback(() => {
-    history.push('plans-create')
+    history.push('users-create')
   }, [history])
 
   const handleNavigateToEdit = useCallback(
-    (planId: string) => {
-      history.push('plans-edit', { id: planId })
+    (userId: string) => {
+      history.push('users-edit', { id: userId })
     },
     [history],
   )
 
   const handleDeleteItem = useCallback(
-    async (planId) => {
+    async (userId) => {
       await confirm({
-        description: 'Deseja mesmo excluir o plano selecionado?',
+        description: 'Deseja mesmo bloquear o usuário selecionado?',
         confirmationText: 'Sim',
         confirmationButtonProps: { color: 'primary', variant: 'contained' },
         cancellationText: 'Não',
       })
       try {
-        await api.delete(`plans/${planId}`)
+        await api.delete(`users/${userId}`)
 
-        getPlans()
+        addToast({
+          type: 'success',
+          title: 'Usuário bloqueado com sucesso',
+          description:
+            'O usuário foi bloqueado, e não pode mais acessar o sistema.',
+        })
+
+        getUsers()
       } catch {
         addToast({
           type: 'error',
-          title: 'Erro durante a exclusão do plano',
-          description: 'Ocorreu um erro ao excluir o plano, tente novamente',
+          title: 'Erro durante o bloqueio do usuário',
+          description: 'Ocorreu um erro ao bloquear o usuário, tente novamente',
         })
       }
     },
-    [confirm, addToast, getPlans],
+    [confirm, addToast, getUsers],
   )
 
   return (
@@ -89,27 +96,27 @@ const ListPlans: React.FC = () => {
         <NavSide />
         <Separator />
         <Table
-          title="Planos"
+          title="Usuários"
           columns={tableColumn.columns}
-          data={plans}
+          data={users}
           actions={[
             {
               icon: 'add',
-              tooltip: 'Adicionar plano',
+              tooltip: 'Adicionar usuário',
               isFreeAction: true,
               onClick: handleNavigateToCreate,
             },
             {
               icon: 'edit',
-              tooltip: 'Editar plano',
-              onClick: (_, rowData: Plan) => {
+              tooltip: 'Editar usuário',
+              onClick: (_, rowData: User) => {
                 handleNavigateToEdit(rowData.id)
               },
             },
             {
               icon: 'delete',
-              tooltip: 'Deletar plano',
-              onClick: (_, rowData: Plan) => {
+              tooltip: 'Deletar usuário',
+              onClick: (_, rowData: User) => {
                 handleDeleteItem(rowData.id)
               },
             },
@@ -120,4 +127,4 @@ const ListPlans: React.FC = () => {
   )
 }
 
-export default ListPlans
+export default ListUsers

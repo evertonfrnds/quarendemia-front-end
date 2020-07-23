@@ -18,6 +18,9 @@ const App: React.FC = () => {
       createMuiTheme({
         palette: {
           type: prefersDarkMode ? 'dark' : 'light',
+          primary: {
+            main: '#ff9000',
+          },
         },
       }),
     [prefersDarkMode],

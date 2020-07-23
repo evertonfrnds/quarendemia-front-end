@@ -12,7 +12,9 @@ import Profile from '../pages/Profile'
 import Dashboard from '../pages/Dashboard'
 
 import PlanRoutes from './plans.routes'
-import Clients from '../pages/Clients'
+import ClientRoutes from './clients.routes'
+import UserRoutes from './users.routes'
+import MeasureRoutes from './measures.routes'
 
 const Routes: React.FC = () => (
   <Switch>
@@ -22,11 +24,13 @@ const Routes: React.FC = () => (
       <Route path="/forgot-password" component={ForgotPassword} />
       <Route path="/reset-password" component={ResetPassword} />
 
-      <Route path="/clients" component={Clients} isPrivate />
       <Route path="/profile" component={Profile} isPrivate />
       <Route path="/dashboard" component={Dashboard} isPrivate />
 
       <PlanRoutes />
+      <ClientRoutes />
+      <UserRoutes />
+      <MeasureRoutes />
     </>
   </Switch>
 )

@@ -15,70 +15,86 @@ import Separator from '../../../components/Separator'
 import api from '../../../services/api'
 import { useToast } from '../../../hooks/toast'
 
-interface Plan {
+interface Measure {
   id: string
-  name: string
-  description: string
-  value: number
+  height: string
+  weight: string
 }
 
-const ListPlans: React.FC = () => {
+interface HistoryStateProps {
+  client_id: string
+}
+
+const ListMeasures: React.FC = () => {
   const [tableColumn] = useState<TableState>({
     columns: [
-      { title: 'Nome', field: 'name' },
-      { title: 'Descrição', field: 'description' },
-      { title: 'Valor', field: 'value', type: 'numeric' },
+      { title: 'Altura', field: 'height', type: 'numeric' },
+      { title: 'Peso', field: 'weight', type: 'numeric' },
     ],
   })
-  const [plans, setPlans] = useState<Plan[]>([])
+  const [measures, setMeasures] = useState<Measure[]>([])
 
   const history = useHistory()
+  const { state } = history.location
+  const historyState = state as HistoryStateProps
+
   const confirm = useConfirm()
 
   const { addToast } = useToast()
 
-  const getPlans = useCallback(() => {
-    api.get(`/plans`).then((response) => {
-      setPlans(response.data)
-    })
-  }, [])
+  const getMeasures = useCallback(() => {
+    api
+      .get(`/measures?client_id=${historyState.client_id}`)
+      .then((response) => {
+        setMeasures(response.data)
+      })
+  }, [historyState.client_id])
 
   useEffect(() => {
-    getPlans()
-  }, [getPlans])
+    getMeasures()
+  }, [getMeasures])
 
   const handleNavigateToCreate = useCallback(() => {
-    history.push('plans-create')
-  }, [history])
+    history.push('measures-create', { client_id: historyState.client_id })
+  }, [history, historyState.client_id])
 
   const handleNavigateToEdit = useCallback(
-    (planId: string) => {
-      history.push('plans-edit', { id: planId })
+    (measureId: string) => {
+      history.push('measures-edit', {
+        id: measureId,
+        client_id: historyState.client_id,
+      })
     },
-    [history],
+    [history, historyState.client_id],
   )
 
   const handleDeleteItem = useCallback(
-    async (planId) => {
+    async (measureId) => {
       await confirm({
-        description: 'Deseja mesmo excluir o plano selecionado?',
+        description: 'Deseja mesmo excluir a medida selecionado?',
         confirmationText: 'Sim',
         confirmationButtonProps: { color: 'primary', variant: 'contained' },
         cancellationText: 'Não',
       })
       try {
-        await api.delete(`plans/${planId}`)
+        await api.delete(`measures/${measureId}`)
 
-        getPlans()
+        addToast({
+          type: 'success',
+          title: 'Medida excluída com sucesso',
+          description: 'O medida foi excluída.',
+        })
+
+        getMeasures()
       } catch {
         addToast({
           type: 'error',
-          title: 'Erro durante a exclusão do plano',
-          description: 'Ocorreu um erro ao excluir o plano, tente novamente',
+          title: 'Erro durante a exclusão da medida',
+          description: 'Ocorreu um erro ao excluir a medida, tente novamente',
         })
       }
     },
-    [confirm, addToast, getPlans],
+    [confirm, addToast, getMeasures],
   )
 
   return (
@@ -89,27 +105,27 @@ const ListPlans: React.FC = () => {
         <NavSide />
         <Separator />
         <Table
-          title="Planos"
+          title="Medidas"
           columns={tableColumn.columns}
-          data={plans}
+          data={measures}
           actions={[
             {
               icon: 'add',
-              tooltip: 'Adicionar plano',
+              tooltip: 'Adicionar medidas',
               isFreeAction: true,
               onClick: handleNavigateToCreate,
             },
             {
               icon: 'edit',
-              tooltip: 'Editar plano',
-              onClick: (_, rowData: Plan) => {
+              tooltip: 'Editar medida',
+              onClick: (_, rowData: Measure) => {
                 handleNavigateToEdit(rowData.id)
               },
             },
             {
               icon: 'delete',
-              tooltip: 'Deletar plano',
-              onClick: (_, rowData: Plan) => {
+              tooltip: 'Deletar medida',
+              onClick: (_, rowData: Measure) => {
                 handleDeleteItem(rowData.id)
               },
             },
@@ -120,4 +136,4 @@ const ListPlans: React.FC = () => {
   )
 }
 
-export default ListPlans
+export default ListMeasures
