@@ -13,8 +13,11 @@ import Dashboard from '../pages/Dashboard'
 
 import PlanRoutes from './plans.routes'
 import ClientRoutes from './clients.routes'
+<<<<<<< HEAD
 import UserRoutes from './users.routes'
 import MeasureRoutes from './measures.routes'
+=======
+>>>>>>> bb38d0bc1d8b83159ddc67c15a84e2e8245c72f2
 
 const Routes: React.FC = () => (
   <Switch>
@@ -29,8 +32,11 @@ const Routes: React.FC = () => (
 
       <PlanRoutes />
       <ClientRoutes />
+<<<<<<< HEAD
       <UserRoutes />
       <MeasureRoutes />
+=======
+>>>>>>> bb38d0bc1d8b83159ddc67c15a84e2e8245c72f2
     </>
   </Switch>
 )

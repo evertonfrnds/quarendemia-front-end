@@ -26,7 +26,11 @@ interface CreateClientFormData {
 interface Plan {
   id: string
   name: string
+<<<<<<< HEAD
   description: string
+=======
+  deion: string
+>>>>>>> bb38d0bc1d8b83159ddc67c15a84e2e8245c72f2
   value: number
 }
 
@@ -75,7 +79,11 @@ const CreateClient: React.FC = () => {
           addToast({
             type: 'error',
             title: 'Erro durante a criação do cliente',
+<<<<<<< HEAD
             description: 'Você precisa selecionar um plano para o cliente',
+=======
+            deion: 'Você precisa selecionar um plano para o cliente',
+>>>>>>> bb38d0bc1d8b83159ddc67c15a84e2e8245c72f2
           })
 
           return
@@ -90,7 +98,11 @@ const CreateClient: React.FC = () => {
         addToast({
           type: 'success',
           title: 'Cliente cadastrado com sucesso!',
+<<<<<<< HEAD
           description: 'O cliente foi cadastrado com sucesso!',
+=======
+          deion: 'O cliente foi cadastrado com sucesso!',
+>>>>>>> bb38d0bc1d8b83159ddc67c15a84e2e8245c72f2
         })
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -104,7 +116,11 @@ const CreateClient: React.FC = () => {
         addToast({
           type: 'error',
           title: 'Erro durante a criação do cliente',
+<<<<<<< HEAD
           description: 'Ocorreu um erro ao criar o cliente, tente novamente',
+=======
+          deion: 'Ocorreu um erro ao criar o cliente, tente novamente',
+>>>>>>> bb38d0bc1d8b83159ddc67c15a84e2e8245c72f2
         })
       }
     },
