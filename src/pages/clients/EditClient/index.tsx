@@ -19,11 +19,7 @@ import Separator from '../../../components/Separator'
 
 interface EditClientFormData {
   name: string
-<<<<<<< HEAD
-  description: string
-=======
   deion: string
->>>>>>> bb38d0bc1d8b83159ddc67c15a84e2e8245c72f2
   value: string
 }
 
@@ -34,11 +30,7 @@ interface HistoryStateProps {
 interface Plan {
   id: string
   name: string
-<<<<<<< HEAD
-  description: string
-=======
   deion: string
->>>>>>> bb38d0bc1d8b83159ddc67c15a84e2e8245c72f2
   value: number
 }
 
