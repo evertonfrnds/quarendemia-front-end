@@ -12,7 +12,7 @@ import Profile from '../pages/Profile'
 import Dashboard from '../pages/Dashboard'
 
 import PlanRoutes from './plans.routes'
-import Clients from '../pages/Clients'
+import ClientRoutes from './clients.routes'
 
 const Routes: React.FC = () => (
   <Switch>
@@ -27,6 +27,7 @@ const Routes: React.FC = () => (
       <Route path="/dashboard" component={Dashboard} isPrivate />
 
       <PlanRoutes />
+      <ClientRoutes />
     </>
   </Switch>
 )
