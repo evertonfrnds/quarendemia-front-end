@@ -34,7 +34,7 @@ const CreatePlan: React.FC = () => {
 
         const schema = Yup.object().shape({
           name: Yup.string().required('Nome do plano obrigatório'),
-          description: Yup.string().required('Descrição do plano obrigatória'),
+          description: Yup.string(),
           value: Yup.number().required('Valor do plano obrigatório'),
         })
 
@@ -42,7 +42,15 @@ const CreatePlan: React.FC = () => {
           abortEarly: false,
         })
 
-        await api.post('/plans', data)
+        const { name, description, value } = data
+
+        const formData = {
+          name,
+          value,
+          ...(description ? { description } : {}),
+        }
+
+        await api.post('/plans', formData)
 
         history.push('/plans-list')
 

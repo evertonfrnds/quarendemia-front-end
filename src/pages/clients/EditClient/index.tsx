@@ -30,7 +30,7 @@ interface HistoryStateProps {
 interface Plan {
   id: string
   name: string
-  deion: string
+  description: string
   value: number
 }
 

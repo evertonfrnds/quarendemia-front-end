@@ -25,6 +25,13 @@ const NavSide: React.FC = () => {
       visible: user.type === 'admin',
     },
     {
+      name: 'Planos',
+      link: '/plans-list',
+      icon: <FiFileText />,
+      selected: false,
+      visible: true,
+    },
+    {
       name: 'Clientes',
       link: '/clients-list',
       icon: <FiUsers />,
@@ -32,9 +39,9 @@ const NavSide: React.FC = () => {
       visible: true,
     },
     {
-      name: 'Planos',
-      link: '/plans-list',
-      icon: <FiFileText />,
+      name: 'Pagamentos',
+      link: '/payments-list',
+      icon: <FiUsers />,
       selected: false,
       visible: true,
     },
