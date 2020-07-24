@@ -1,20 +1,14 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
-import { getMonth, getYear } from 'date-fns'
 
 import { useConfirm } from 'material-ui-confirm'
+
+import { Grid } from '@material-ui/core'
+import { getMonth, getYear } from 'date-fns'
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
-import {
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  CardActions,
-  Button,
-} from '@material-ui/core'
 import Table, { TableState } from '../../../components/Table'
 
 import { Container, Content } from './styles'
@@ -26,31 +20,26 @@ import Separator from '../../../components/Separator'
 import api from '../../../services/api'
 import { useToast } from '../../../hooks/toast'
 
-interface Client {
+interface Payment {
   id: string
   name: string
   email: string
 }
 
-const Dashboard: React.FC = () => {
+const ListPayments: React.FC = () => {
   const [tableColumn] = useState<TableState>({
     columns: [
-      { title: 'Nome', field: 'name' },
-      { title: 'E-mail', field: 'email' },
+      { title: 'Nome', field: 'client.name' },
+      { title: 'E-mail', field: 'client.email' },
       {
         field: 'status',
         title: 'Status',
-        render: () => <p>pendente</p>,
+        render: () => <p>pago</p>,
       },
     ],
   })
-  const [clients, setClients] = useState<Client[]>([])
+  const [payments, setPayments] = useState<Payment[]>([])
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date())
-  const [totalPayment, setTotalPayment] = useState<number>(0)
-
-  const { addToast } = useToast()
-
-  const confirm = useConfirm()
 
   const selectedMonth = useMemo(() => {
     const month = getMonth(selectedDate || Date.now()) + 1
@@ -62,59 +51,51 @@ const Dashboard: React.FC = () => {
     return year
   }, [selectedDate])
 
+  const confirm = useConfirm()
+
+  const { addToast } = useToast()
+
+  const getPayments = useCallback(() => {
+    api.get(`/payments/${selectedMonth}/${selectedYear}`).then((response) => {
+      setPayments(response.data)
+    })
+  }, [selectedYear, selectedMonth])
+
   const handleDateChange = useCallback((date: Date | null) => {
     setSelectedDate(date)
   }, [])
 
-  const getDebtors = useCallback(() => {
-    api
-      .get(`/due-clients/${selectedMonth}/${selectedYear}`)
-      .then((response) => {
-        setClients(response.data)
-      })
-  }, [selectedMonth, selectedYear])
-
-  const getTotalPayment = useCallback(() => {
-    api
-      .get(`/payments/payment-total/${selectedMonth}/${selectedYear}`)
-      .then((response) => {
-        setTotalPayment(response.data)
-      })
-  }, [selectedMonth, selectedYear])
-
   useEffect(() => {
-    getDebtors()
-    getTotalPayment()
-  }, [getDebtors, getTotalPayment])
+    getPayments()
+  }, [getPayments])
 
-  const handlePayment = useCallback(
-    async (clientId) => {
+  const handleCancelPayment = useCallback(
+    async (paymentId) => {
       await confirm({
-        description: 'Deseja mesmo confirmar esse pagamento?',
+        description: 'Deseja mesmo cancelar esse pagamento?',
         confirmationText: 'Sim',
         confirmationButtonProps: { color: 'primary', variant: 'contained' },
         cancellationText: 'Não',
       })
       try {
-        const payment = {
-          client_id: clientId,
-          month: selectedMonth,
-          year: selectedYear,
-        }
+        await api.delete(`payments/${paymentId}`)
 
-        await api.post(`payments`, payment)
+        addToast({
+          type: 'success',
+          title: 'Pagamento cancelado com sucesso!',
+        })
 
-        getDebtors()
+        getPayments()
       } catch {
         addToast({
           type: 'error',
-          title: 'Erro durante a confirmação do pagamento',
+          title: 'Erro durante o cancelamento do pagamento',
           description:
-            'Ocorreu um erro ao confirmar o pagamento, tente novamente',
+            'Ocorreu um erro ao cancelar o pagamento, tente novamente',
         })
       }
     },
-    [confirm, addToast, getDebtors, selectedYear, selectedMonth],
+    [confirm, addToast, getPayments],
   )
 
   return (
@@ -141,30 +122,18 @@ const Dashboard: React.FC = () => {
                   'aria-label': 'change date',
                 }}
               />
-              <Card>
-                <CardContent>
-                  <Typography color="textSecondary" gutterBottom>
-                    Recebido do mês
-                  </Typography>
-
-                  <Typography variant="body2" component="p">
-                    {totalPayment}
-                  </Typography>
-                </CardContent>
-              </Card>
             </Grid>
           </MuiPickersUtilsProvider>
-
           <Table
-            title="Pagamentos a receber"
+            title="Pagamentos recebidos"
             columns={tableColumn.columns}
-            data={clients}
+            data={payments}
             actions={[
               {
-                icon: 'edit',
-                tooltip: 'Save User',
-                onClick: (_, rowData: Client) => {
-                  handlePayment(rowData.id)
+                icon: 'delete',
+                tooltip: 'Cancelar pagamento',
+                onClick: (_, rowData: Payment) => {
+                  handleCancelPayment(rowData.id)
                 },
               },
             ]}
@@ -175,4 +144,4 @@ const Dashboard: React.FC = () => {
   )
 }
 
-export default Dashboard
+export default ListPayments
