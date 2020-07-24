@@ -37,6 +37,7 @@ interface Plan {
 const EditClient: React.FC = () => {
   const [client, setClient] = useState({} as EditClientFormData)
   const [plan, setPlan] = useState('')
+  const [isActive, setIsActive] = useState('')
   const [plans, setPlans] = useState<Plan[]>([])
 
   const formRef = useRef<FormHandles>(null)
@@ -57,6 +58,7 @@ const EditClient: React.FC = () => {
       const clientResponse = response.data
       setClient(clientResponse)
       setPlan(clientResponse.plan.id)
+      setIsActive(clientResponse.is_active)
     })
   }, [historyState.id])
 
@@ -67,6 +69,10 @@ const EditClient: React.FC = () => {
 
   const handleChange = useCallback((event) => {
     setPlan(event.target.value)
+  }, [])
+
+  const handleChangeIsActive = useCallback((event) => {
+    setIsActive(event.target.value)
   }, [])
 
   const handleSubmit = useCallback(
@@ -98,7 +104,20 @@ const EditClient: React.FC = () => {
           return
         }
 
-        const clientData = Object.assign(data, { plan_id: plan })
+        if (!isActive) {
+          addToast({
+            type: 'error',
+            title: 'Erro durante a alteração do cliente',
+            description: 'Você precisa selecionar se o usuário está ativo',
+          })
+
+          return
+        }
+
+        const clientData = Object.assign(data, {
+          plan_id: plan,
+          is_active: isActive,
+        })
 
         await api.put(`/clients/${historyState.id}`, clientData)
 
@@ -125,7 +144,7 @@ const EditClient: React.FC = () => {
         })
       }
     },
-    [addToast, history, historyState.id, plan],
+    [addToast, history, historyState.id, plan, isActive],
   )
 
   return (
@@ -161,6 +180,25 @@ const EditClient: React.FC = () => {
               ))}
             </Select>
           </FormControl>
+          <FormControl variant="outlined">
+            <InputLabel id="demo-simple-select-outlined-label">
+              Cliente ativo?
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-outlined-label"
+              id="demo-simple-select-outlined"
+              value={isActive}
+              onChange={handleChangeIsActive}
+              label="Cliente ativo?"
+            >
+              <MenuItem value="">
+                <em>Cliente ativo?</em>
+              </MenuItem>
+              <MenuItem value="true">Sim</MenuItem>
+              <MenuItem value="false">Não</MenuItem>
+            </Select>
+          </FormControl>
+
           <Button type="submit">Confirmar mudanças</Button>
         </Form>
       </Content>

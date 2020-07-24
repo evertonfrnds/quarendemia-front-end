@@ -23,4 +23,5 @@ export const Form = styled(Unform)`
 export const FormControl = styled(FormControlElement)`
   width: 100%;
   background: #232129;
+  margin-top: 15px !important;
 `

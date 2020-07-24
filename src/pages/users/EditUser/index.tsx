@@ -76,7 +76,7 @@ const EditUser: React.FC = () => {
         if (!type) {
           addToast({
             type: 'error',
-            title: 'Erro durante a criação do usuário',
+            title: 'Erro durante a alteração do usuário',
             description: 'Você precisa selecionar o tipo de usuário',
           })
 
@@ -86,7 +86,7 @@ const EditUser: React.FC = () => {
         if (!isActive) {
           addToast({
             type: 'error',
-            title: 'Erro durante a criação do usuário',
+            title: 'Erro durante a alteração do usuário',
             description: 'Você precisa selecionar se o usuário está ativo',
           })
 

@@ -7,14 +7,7 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
-import {
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  CardActions,
-  Button,
-} from '@material-ui/core'
+import { Grid, Card, CardContent, Typography } from '@material-ui/core'
 import Table, { TableState } from '../../../components/Table'
 
 import { Container, Content } from './styles'
