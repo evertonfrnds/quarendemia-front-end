@@ -71,6 +71,7 @@ const ListMeasures: React.FC = () => {
   const handleDeleteItem = useCallback(
     async (measureId) => {
       await confirm({
+        title: 'Atenção',
         description: 'Deseja mesmo excluir a medida selecionado?',
         confirmationText: 'Sim',
         confirmationButtonProps: { color: 'primary', variant: 'contained' },

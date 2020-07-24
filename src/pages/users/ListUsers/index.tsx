@@ -61,6 +61,7 @@ const ListUsers: React.FC = () => {
   const handleDeleteItem = useCallback(
     async (userId) => {
       await confirm({
+        title: 'Atenção',
         description: 'Deseja mesmo bloquear o usuário selecionado?',
         confirmationText: 'Sim',
         confirmationButtonProps: { color: 'primary', variant: 'contained' },

@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react'
-import { FiMail, FiUser } from 'react-icons/fi'
+import { FiMail, FiUser, FiLock } from 'react-icons/fi'
 import { FormHandles } from '@unform/core'
 import * as Yup from 'yup'
 import { useHistory } from 'react-router-dom'
@@ -109,7 +109,7 @@ const CreateUser: React.FC = () => {
 
           <Input name="name" icon={FiUser} placeholder="Nome" />
           <Input name="email" icon={FiMail} placeholder="E-mail" />
-          <Input name="password" icon={FiMail} placeholder="Senha" />
+          <Input name="password" icon={FiLock} placeholder="Senha" />
           <FormControl variant="outlined">
             <InputLabel id="demo-simple-select-outlined-label">
               Usuário

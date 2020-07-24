@@ -1,5 +1,6 @@
 import React, { useCallback, useRef } from 'react'
-import { FiMail, FiUser } from 'react-icons/fi'
+import { FiInfo } from 'react-icons/fi'
+import { MdAttachMoney } from 'react-icons/md'
 import { FormHandles } from '@unform/core'
 import * as Yup from 'yup'
 import { useHistory } from 'react-router-dom'
@@ -88,9 +89,9 @@ const CreatePlan: React.FC = () => {
         <Form ref={formRef} onSubmit={handleSubmit}>
           <h1>Cadastrar plano</h1>
 
-          <Input name="name" icon={FiUser} placeholder="Nome" />
-          <Input name="description" icon={FiMail} placeholder="Descrição" />
-          <Input name="value" icon={FiMail} placeholder="Valor" />
+          <Input name="name" icon={FiInfo} placeholder="Nome" />
+          <Input name="description" icon={FiInfo} placeholder="Descrição" />
+          <Input name="value" icon={MdAttachMoney} placeholder="Valor" />
 
           <Button type="submit">Cadastrar</Button>
         </Form>

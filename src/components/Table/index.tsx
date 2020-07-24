@@ -8,7 +8,7 @@ interface TableProps extends TableHTMLAttributes<HTMLInputElement> {
 }
 
 interface ActionProps {
-  icon: string
+  icon: any
   tooltip: string
   isFreeAction?: boolean
   onClick(event: Event, rowData: Object): void

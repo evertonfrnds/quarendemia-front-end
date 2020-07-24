@@ -8,6 +8,7 @@ import {
 } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
 import { Grid, Card, CardContent, Typography } from '@material-ui/core'
+import { MdAttachMoney } from 'react-icons/md'
 import Table, { TableState } from '../../../components/Table'
 
 import { Container, Content } from './styles'
@@ -83,6 +84,7 @@ const Dashboard: React.FC = () => {
   const handlePayment = useCallback(
     async (clientId) => {
       await confirm({
+        title: 'Atenção',
         description: 'Deseja mesmo confirmar esse pagamento?',
         confirmationText: 'Sim',
         confirmationButtonProps: { color: 'primary', variant: 'contained' },
@@ -154,7 +156,7 @@ const Dashboard: React.FC = () => {
             data={clients}
             actions={[
               {
-                icon: 'edit',
+                icon: () => <MdAttachMoney />,
                 tooltip: 'Save User',
                 onClick: (_, rowData: Client) => {
                   handlePayment(rowData.id)

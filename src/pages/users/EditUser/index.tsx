@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useEffect, useState } from 'react'
-import { FiMail, FiUser } from 'react-icons/fi'
+import { FiMail, FiUser, FiLock } from 'react-icons/fi'
 import { FormHandles } from '@unform/core'
 import * as Yup from 'yup'
 import { useHistory } from 'react-router-dom'
@@ -22,7 +22,7 @@ interface EditUserFormData {
   email: string
   password: string
   type: string
-  isActive: boolean
+  is_active: boolean
 }
 
 interface HistoryStateProps {
@@ -46,7 +46,7 @@ const EditUser: React.FC = () => {
       const userData = response.data
       setUser(userData)
       setType(userData.type)
-      setIsActive(userData.isActive)
+      setIsActive(userData.is_active)
     })
   }, [historyState.id])
 
@@ -99,7 +99,7 @@ const EditUser: React.FC = () => {
           name,
           email,
           type,
-          isActive,
+          is_active: isActive,
           ...(password ? { password } : {}),
         }
 
@@ -145,7 +145,7 @@ const EditUser: React.FC = () => {
           <Input name="email" icon={FiMail} placeholder="E-mail" />
           <Input
             name="password"
-            icon={FiMail}
+            icon={FiLock}
             placeholder="Senha"
             defaultValue={undefined}
           />

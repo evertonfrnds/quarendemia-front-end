@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { AiOutlineDashboard } from 'react-icons/ai'
 import { FiUsers, FiFileText } from 'react-icons/fi'
+import { MdAttachMoney } from 'react-icons/md'
 import { Container, NavItem } from './styles'
 import { useAuth } from '../../hooks/auth'
 
@@ -20,7 +21,7 @@ const NavSide: React.FC = () => {
     {
       name: 'Usuários',
       link: '/users-list',
-      icon: <FiFileText />,
+      icon: <FiUsers />,
       selected: false,
       visible: user.type === 'admin',
     },
@@ -41,7 +42,7 @@ const NavSide: React.FC = () => {
     {
       name: 'Pagamentos',
       link: '/payments-list',
-      icon: <FiUsers />,
+      icon: <MdAttachMoney />,
       selected: false,
       visible: true,
     },

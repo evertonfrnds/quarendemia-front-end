@@ -1,8 +1,8 @@
 import React, { useCallback, useRef, useEffect, useState } from 'react'
-import { FiMail, FiUser } from 'react-icons/fi'
 import { FormHandles } from '@unform/core'
 import * as Yup from 'yup'
 import { useHistory } from 'react-router-dom'
+import { FaRuler } from 'react-icons/fa'
 import api from '../../../services/api'
 import { useToast } from '../../../hooks/toast'
 
@@ -134,41 +134,41 @@ const EditMeasure: React.FC = () => {
         <Form initialData={measure} ref={formRef} onSubmit={handleSubmit}>
           <h1>Editar medição</h1>
 
-          <Input name="height" icon={FiUser} placeholder="Altura (cm)" />
-          <Input name="weight" icon={FiMail} placeholder="Peso (cm)" />
-          <Input name="neck" icon={FiMail} placeholder="Pescoço" />
-          <Input name="torax_top" icon={FiMail} placeholder="Tórax superior" />
+          <Input name="height" icon={FaRuler} placeholder="Altura (cm)" />
+          <Input name="weight" icon={FaRuler} placeholder="Peso (cm)" />
+          <Input name="neck" icon={FaRuler} placeholder="Pescoço" />
+          <Input name="torax_top" icon={FaRuler} placeholder="Tórax superior" />
           <Input
             name="torax_bottom"
-            icon={FiMail}
+            icon={FaRuler}
             placeholder="Tórax inferior"
           />
-          <Input name="bust" icon={FiMail} placeholder="Peito" />
-          <Input name="waist" icon={FiMail} placeholder="Cintura" />
-          <Input name="abdomen" icon={FiMail} placeholder="Abdômen" />
-          <Input name="hip" icon={FiMail} placeholder="quadril" />
-          <Input name="thigh_left" icon={FiMail} placeholder="Coxa esquerda" />
-          <Input name="thigh_right" icon={FiMail} placeholder="Coxa direita" />
+          <Input name="bust" icon={FaRuler} placeholder="Peito" />
+          <Input name="waist" icon={FaRuler} placeholder="Cintura" />
+          <Input name="abdomen" icon={FaRuler} placeholder="Abdômen" />
+          <Input name="hip" icon={FaRuler} placeholder="quadril" />
+          <Input name="thigh_left" icon={FaRuler} placeholder="Coxa esquerda" />
+          <Input name="thigh_right" icon={FaRuler} placeholder="Coxa direita" />
           <Input
             name="calf_left"
-            icon={FiMail}
+            icon={FaRuler}
             placeholder="Panturrilha esquerda"
           />
           <Input
             name="calf_right"
-            icon={FiMail}
+            icon={FaRuler}
             placeholder="Panturrilha direita"
           />
-          <Input name="arm_left" icon={FiMail} placeholder="Braço esquerdo" />
-          <Input name="arm_right" icon={FiMail} placeholder="Braço direito" />
+          <Input name="arm_left" icon={FaRuler} placeholder="Braço esquerdo" />
+          <Input name="arm_right" icon={FaRuler} placeholder="Braço direito" />
           <Input
             name="forearm_left"
-            icon={FiMail}
+            icon={FaRuler}
             placeholder="Antebraço esquerdo"
           />
           <Input
             name="forearm_right"
-            icon={FiMail}
+            icon={FaRuler}
             placeholder="Antebraço direito"
           />
 

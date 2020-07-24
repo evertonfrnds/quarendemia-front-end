@@ -61,6 +61,7 @@ const ListPlans: React.FC = () => {
   const handleDeleteItem = useCallback(
     async (planId) => {
       await confirm({
+        title: 'Atenção',
         description: 'Deseja mesmo excluir o plano selecionado?',
         confirmationText: 'Sim',
         confirmationButtonProps: { color: 'primary', variant: 'contained' },

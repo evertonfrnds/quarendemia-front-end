@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
+import { FaRuler } from 'react-icons/fa'
 
 import { useHistory } from 'react-router-dom'
 
@@ -68,6 +69,7 @@ const ListClients: React.FC = () => {
   const handleDeleteItem = useCallback(
     async (clientId) => {
       await confirm({
+        title: 'Atenção',
         description: 'Deseja mesmo bloquear o cliente selecionado?',
         confirmationText: 'Sim',
         confirmationButtonProps: { color: 'primary', variant: 'contained' },
@@ -101,13 +103,13 @@ const ListClients: React.FC = () => {
           data={clients}
           actions={[
             {
-              icon: 'add',
+              icon: 'Add',
               tooltip: 'Adicionar cliente',
               isFreeAction: true,
               onClick: handleNavigateToCreate,
             },
             {
-              icon: 'edit',
+              icon: () => <FaRuler />,
               tooltip: 'Ver medições',
               onClick: (_, rowData: Plan) => {
                 handleNavigateToMeasures(rowData.id)

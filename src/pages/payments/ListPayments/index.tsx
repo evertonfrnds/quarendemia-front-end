@@ -72,6 +72,7 @@ const ListPayments: React.FC = () => {
   const handleCancelPayment = useCallback(
     async (paymentId) => {
       await confirm({
+        title: 'Atenção',
         description: 'Deseja mesmo cancelar esse pagamento?',
         confirmationText: 'Sim',
         confirmationButtonProps: { color: 'primary', variant: 'contained' },
@@ -130,7 +131,7 @@ const ListPayments: React.FC = () => {
             data={payments}
             actions={[
               {
-                icon: 'delete',
+                icon: 'cancel',
                 tooltip: 'Cancelar pagamento',
                 onClick: (_, rowData: Payment) => {
                   handleCancelPayment(rowData.id)
