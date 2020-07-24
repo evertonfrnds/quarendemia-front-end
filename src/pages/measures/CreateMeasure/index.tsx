@@ -78,48 +78,11 @@ const CreateMeasure: React.FC = () => {
           abortEarly: false,
         })
 
-        const {
-          height,
-          weight,
-          neck,
-          torax_top,
-          torax_bottom,
-          bust,
-          waist,
-          abdomen,
-          hip,
-          thigh_left,
-          thigh_right,
-          calf_left,
-          calf_right,
-          arm_left,
-          arm_right,
-          forearm_left,
-          forearm_right,
-        } = data
-
-        const formData = {
+        const measureData = Object.assign(data, {
           client_id: historyState.client_id,
-          height,
-          weight,
-          ...(neck ? { neck } : {}),
-          ...(torax_top ? { torax_top } : {}),
-          ...(torax_bottom ? { torax_bottom } : {}),
-          ...(bust ? { bust } : {}),
-          ...(waist ? { waist } : {}),
-          ...(abdomen ? { abdomen } : {}),
-          ...(hip ? { hip } : {}),
-          ...(thigh_left ? { thigh_left } : {}),
-          ...(thigh_right ? { thigh_right } : {}),
-          ...(calf_left ? { calf_left } : {}),
-          ...(calf_right ? { calf_right } : {}),
-          ...(arm_left ? { arm_left } : {}),
-          ...(arm_right ? { arm_right } : {}),
-          ...(forearm_left ? { forearm_left } : {}),
-          ...(forearm_right ? { forearm_right } : {}),
-        }
+        })
 
-        await api.post('/measures', formData)
+        await api.post('/measures', measureData)
 
         history.push('/measures-list', { client_id: historyState.client_id })
 
