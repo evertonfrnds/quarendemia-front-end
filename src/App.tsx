@@ -19,7 +19,7 @@ const App: React.FC = () => {
         palette: {
           type: prefersDarkMode ? 'dark' : 'light',
           primary: {
-            main: '#ff9000',
+            main: '#015c92',
           },
         },
       }),

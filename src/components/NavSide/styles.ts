@@ -16,18 +16,18 @@ export const NavItem = styled.div<PropsNavItem>`
   padding: 18px 25px;
   border-radius: 5px;
 
-  border-left: ${(p) => (p.selected ? '2px solid #ff9000' : '')};
+  border-left: ${(p) => (p.selected ? '2px solid #015c92' : '')};
 
   a {
     text-decoration: none;
-    color: ${(p) => (p.selected ? '#ff9000' : '#fff')};
+    color: ${(p) => (p.selected ? '#015c92' : '#fff')};
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
 
     &:hover {
-      color: #ff9000;
+      color: #015c92;
     }
   }
 `
