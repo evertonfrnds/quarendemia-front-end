@@ -13,6 +13,8 @@ import getValidationErrors from '../../../utils/getValidationErrors'
 import Button from '../../../components/Button'
 import Input from '../../../components/Input'
 
+import quarendemia from '../../../assets/quarendemia.png'
+
 import { Container, Content, AnimationContainer, Background } from './styles'
 
 interface SignInFormData {
@@ -70,6 +72,8 @@ const SignIn: React.FC = () => {
       <Content>
         <AnimationContainer>
           <Form ref={formRef} onSubmit={handleSubmit}>
+            <img src={quarendemia} alt="quarendemia" style={{ height: 250 }} />
+
             <h1>Faça seu login</h1>
 
             <Input name="email" icon={FiMail} placeholder="E-mail" />

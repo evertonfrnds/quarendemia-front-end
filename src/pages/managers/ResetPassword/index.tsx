@@ -14,6 +14,7 @@ import Input from '../../../components/Input'
 
 import { Container, Content, AnimationContainer, Background } from './styles'
 import api from '../../../services/api'
+import quarendemia from '../../../assets/quarendemia.png'
 
 interface ResetPasswordFormData {
   password: string
@@ -82,6 +83,8 @@ const ResetPassword: React.FC = () => {
       <Content>
         <AnimationContainer>
           <Form ref={formRef} onSubmit={handleSubmit}>
+            <img src={quarendemia} alt="quarendemia" style={{ height: 250 }} />
+
             <h1>Resetar senha</h1>
 
             <Input
