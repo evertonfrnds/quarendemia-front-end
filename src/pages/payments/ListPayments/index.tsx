@@ -11,7 +11,7 @@ import {
 import DateFnsUtils from '@date-io/date-fns'
 import Table, { TableState } from '../../../components/Table'
 
-import { Container, Content } from './styles'
+import { Container, Content, Space } from './styles'
 import Header from '../../../components/Header'
 
 import NavSide from '../../../components/NavSide'
@@ -125,6 +125,7 @@ const ListPayments: React.FC = () => {
               />
             </Grid>
           </MuiPickersUtilsProvider>
+          <Space />
           <Table
             title="Pagamentos recebidos"
             columns={tableColumn.columns}

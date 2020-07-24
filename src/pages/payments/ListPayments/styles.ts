@@ -14,3 +14,7 @@ export const FormControl = styled(FormControlElement)`
   background: #232129;
   margin-bottom: 20px !important;
 `
+
+export const Space = styled.div`
+  margin-top: 30px;
+`

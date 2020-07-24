@@ -7,3 +7,7 @@ export const Content = styled.main`
   margin: 34px auto;
   display: flex;
 `
+
+export const Space = styled.div`
+  margin-top: 30px;
+`

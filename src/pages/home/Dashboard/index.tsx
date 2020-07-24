@@ -11,7 +11,7 @@ import { Grid, Card, CardContent, Typography } from '@material-ui/core'
 import { MdAttachMoney } from 'react-icons/md'
 import Table, { TableState } from '../../../components/Table'
 
-import { Container, Content } from './styles'
+import { Container, Content, Space } from './styles'
 import Header from '../../../components/Header'
 
 import NavSide from '../../../components/NavSide'
@@ -56,10 +56,6 @@ const Dashboard: React.FC = () => {
     return year
   }, [selectedDate])
 
-  const handleDateChange = useCallback((date: Date | null) => {
-    setSelectedDate(date)
-  }, [])
-
   const getDebtors = useCallback(() => {
     api
       .get(`/due-clients/${selectedMonth}/${selectedYear}`)
@@ -75,6 +71,10 @@ const Dashboard: React.FC = () => {
         setTotalPayment(response.data)
       })
   }, [selectedMonth, selectedYear])
+
+  const handleDateChange = useCallback((date: Date | null) => {
+    setSelectedDate(date)
+  }, [])
 
   useEffect(() => {
     getDebtors()
@@ -149,7 +149,7 @@ const Dashboard: React.FC = () => {
               </Card>
             </Grid>
           </MuiPickersUtilsProvider>
-
+          <Space />
           <Table
             title="Pagamentos a receber"
             columns={tableColumn.columns}
