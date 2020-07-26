@@ -20,6 +20,13 @@ O projeto vai ser usado as seguintes tecnologias:
 - [React - v16.13.1](https://pt-br.reactjs.org/) - faz com que a criação de UIs interativas seja uma tarefa fácil.
 - [VSCode lasted Version]() - Editor de Código!
 
+## Usagem
+
+```bash
+yarn
+yarn start
+```
+
 ## Tutoriais e Documentação
 
 - [ECMAScript](https://developer.mozilla.org/pt-BR/docs/Aprender/JavaScript)
